@@ -1,0 +1,306 @@
+bash -v testing.sh
+module () {  local _mlredir=1;
+ if [ -n "${MODULES_REDIRECT_OUTPUT+x}" ]; then
+ if [ "$MODULES_REDIRECT_OUTPUT" = '0' ]; then
+ _mlredir=0;
+ else
+ if [ "$MODULES_REDIRECT_OUTPUT" = '1' ]; then
+ _mlredir=1;
+ fi;
+ fi;
+ fi;
+ case " $@ " in 
+ *' --no-redirect '*)
+ _mlredir=0
+ ;;
+ *' --redirect '*)
+ _mlredir=1
+ ;;
+ esac;
+ if [ $_mlredir -eq 0 ]; then
+ _module_raw "$@";
+ else
+ _module_raw "$@" 2>&1;
+ fi
+}
+ml () {  module ml "$@"
+}
+_module_raw () {  eval "$(/usr/bin/tclsh8.6 '/usr/lib/x86_64-linux-gnu/modulecmd.tcl' bash "$@")";
+ _mlstatus=$?;
+ return $_mlstatus
+}
+#!/bin/bash
+# testing script for indexer
+# Candice Jiang
+
+# Ensure the directory for test data doesn't exist, then create it
+rm -rf testing
+mkdir testing
+
+################## indexer #######################
+
+################## Test 1: error cases, corner cases #######################
+# no arguments
+./indexer
+Usage: ./indexer pageDirectory indexFilename
+
+# only 1 argument
+./indexer ../crawler/testing/letters-1
+Usage: ./indexer pageDirectory indexFilename
+
+# three or more arguments
+./indexer 1 2 3 4 5
+Usage: ./indexer pageDirectory indexFilename
+
+################## Test 2: valgrind test #######################
+# valgrind test for letters-0
+valgrind ./indexer ~/cs50-dev/shared/tse/output/letters-0 testing/letters-0.index
+==2107609== Memcheck, a memory error detector
+==2107609== Copyright (C) 2002-2022, and GNU GPL'd, by Julian Seward et al.
+==2107609== Using Valgrind-3.22.0 and LibVEX; rerun with -h for copyright info
+==2107609== Command: ./indexer /thayerfs/home/f007h2w/cs50-dev/shared/tse/output/letters-0 testing/letters-0.index
+==2107609== 
+Indexer has successfully completed.
+==2107609== 
+==2107609== HEAP SUMMARY:
+==2107609==     in use at exit: 0 bytes in 0 blocks
+==2107609==   total heap usage: 98 allocs, 98 frees, 33,402 bytes allocated
+==2107609== 
+==2107609== All heap blocks were freed -- no leaks are possible
+==2107609== 
+==2107609== For lists of detected and suppressed errors, rerun with: -s
+==2107609== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+
+# valgrind test for letters-1
+valgrind ./indexer ~/cs50-dev/shared/tse/output/letters-1 testing/letters-1.index
+==2107628== Memcheck, a memory error detector
+==2107628== Copyright (C) 2002-2022, and GNU GPL'd, by Julian Seward et al.
+==2107628== Using Valgrind-3.22.0 and LibVEX; rerun with -h for copyright info
+==2107628== Command: ./indexer /thayerfs/home/f007h2w/cs50-dev/shared/tse/output/letters-1 testing/letters-1.index
+==2107628== 
+Indexer has successfully completed.
+==2107628== 
+==2107628== HEAP SUMMARY:
+==2107628==     in use at exit: 0 bytes in 0 blocks
+==2107628==   total heap usage: 803 allocs, 803 frees, 156,355 bytes allocated
+==2107628== 
+==2107628== All heap blocks were freed -- no leaks are possible
+==2107628== 
+==2107628== For lists of detected and suppressed errors, rerun with: -s
+==2107628== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+
+# valgrind test for letters-2
+valgrind ./indexer ~/cs50-dev/shared/tse/output/letters-2 testing/letters-2.index
+==2107638== Memcheck, a memory error detector
+==2107638== Copyright (C) 2002-2022, and GNU GPL'd, by Julian Seward et al.
+==2107638== Using Valgrind-3.22.0 and LibVEX; rerun with -h for copyright info
+==2107638== Command: ./indexer /thayerfs/home/f007h2w/cs50-dev/shared/tse/output/letters-2 testing/letters-2.index
+==2107638== 
+Indexer has successfully completed.
+==2107638== 
+==2107638== HEAP SUMMARY:
+==2107638==     in use at exit: 0 bytes in 0 blocks
+==2107638==   total heap usage: 803 allocs, 803 frees, 156,355 bytes allocated
+==2107638== 
+==2107638== All heap blocks were freed -- no leaks are possible
+==2107638== 
+==2107638== For lists of detected and suppressed errors, rerun with: -s
+==2107638== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+
+# valgrind test for toscrape-1
+valgrind ./indexer ~/cs50-dev/shared/tse/output/toscrape-1 testing/toscrape-1.index
+==2107667== Memcheck, a memory error detector
+==2107667== Copyright (C) 2002-2022, and GNU GPL'd, by Julian Seward et al.
+==2107667== Using Valgrind-3.22.0 and LibVEX; rerun with -h for copyright info
+==2107667== Command: ./indexer /thayerfs/home/f007h2w/cs50-dev/shared/tse/output/toscrape-1 testing/toscrape-1.index
+==2107667== 
+Indexer has successfully completed.
+==2107667== 
+==2107667== HEAP SUMMARY:
+==2107667==     in use at exit: 0 bytes in 0 blocks
+==2107667==   total heap usage: 2,403,243 allocs, 2,403,243 frees, 44,059,949,868 bytes allocated
+==2107667== 
+==2107667== All heap blocks were freed -- no leaks are possible
+==2107667== 
+==2107667== For lists of detected and suppressed errors, rerun with: -s
+==2107667== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+
+# valgrind test for wikipedia-1
+valgrind ./indexer ~/cs50-dev/shared/tse/output/wikipedia-1 testing/wikipedia-1.index
+==2108365== Memcheck, a memory error detector
+==2108365== Copyright (C) 2002-2022, and GNU GPL'd, by Julian Seward et al.
+==2108365== Using Valgrind-3.22.0 and LibVEX; rerun with -h for copyright info
+==2108365== Command: ./indexer /thayerfs/home/f007h2w/cs50-dev/shared/tse/output/wikipedia-1 testing/wikipedia-1.index
+==2108365== 
+Indexer has successfully completed.
+==2108365== 
+==2108365== HEAP SUMMARY:
+==2108365==     in use at exit: 0 bytes in 0 blocks
+==2108365==   total heap usage: 1,615,245 allocs, 1,615,245 frees, 234,201,029,610 bytes allocated
+==2108365== 
+==2108365== All heap blocks were freed -- no leaks are possible
+==2108365== 
+==2108365== For lists of detected and suppressed errors, rerun with: -s
+==2108365== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+
+################## Test 3: check output file #######################
+# indexcmp for letter-0.index
+./indexer ~/cs50-dev/shared/tse/output/letters-0 testing/letters-0.index
+Indexer has successfully completed.
+~/cs50-dev/shared/tse/indexcmp testing/letters-0.index ~/cs50-dev/shared/tse/output/letters-0.index
+
+# indexcmp for letter-1.index
+./indexer ~/cs50-dev/shared/tse/output/letters-1 testing/letters-1.index
+Indexer has successfully completed.
+~/cs50-dev/shared/tse/indexcmp testing/letters-1.index ~/cs50-dev/shared/tse/output/letters-1.index
+
+# indexcmp for letter-2.index
+./indexer ~/cs50-dev/shared/tse/output/letters-2 testing/letters-2.index
+Indexer has successfully completed.
+~/cs50-dev/shared/tse/indexcmp testing/letters-2.index ~/cs50-dev/shared/tse/output/letters-2.index
+
+# indexcmp for toscrape-1.index
+./indexer ~/cs50-dev/shared/tse/output/toscrape-1 testing/toscrape-1.index
+Indexer has successfully completed.
+~/cs50-dev/shared/tse/indexcmp testing/toscrape-1.index ~/cs50-dev/shared/tse/output/toscrape-1.index
+
+# indexcmp for wikipedia-1.index
+./indexer ~/cs50-dev/shared/tse/output/wikipedia-1 testing/wikipedia-1.index
+Indexer has successfully completed.
+~/cs50-dev/shared/tse/indexcmp testing/wikipedia-1.index ~/cs50-dev/shared/tse/output/wikipedia-1.index
+
+################## indextest #######################
+
+################## Test 1: error cases, corner cases #######################
+# no arguments
+./indextest
+Usage: ./indextest oldIndexFilename newIndexFilename
+
+# only 1 argument
+./indextest testing/letters-1
+Usage: ./indextest oldIndexFilename newIndexFilename
+
+# three or more arguments
+./indextest 1 2 3 4 5
+Usage: ./indextest oldIndexFilename newIndexFilename
+
+# invalid oldIndexFilePath
+./indextest testing/nonexist/index.index testing/tmp.index
+Error: Could not open testing/nonexist/index.index for reading
+
+################## Test 2: valgrind test #######################
+# valgrind test for letters-0
+valgrind  ./indextest testing/letters-0.index testing/letters-0-test.index
+==2111569== Memcheck, a memory error detector
+==2111569== Copyright (C) 2002-2022, and GNU GPL'd, by Julian Seward et al.
+==2111569== Using Valgrind-3.22.0 and LibVEX; rerun with -h for copyright info
+==2111569== Command: ./indextest testing/letters-0.index testing/letters-0-test.index
+==2111569== 
+Successfully loaded index from testing/letters-0.index and saved it to testing/letters-0-test.index
+==2111569== 
+==2111569== HEAP SUMMARY:
+==2111569==     in use at exit: 0 bytes in 0 blocks
+==2111569==   total heap usage: 50 allocs, 50 frees, 30,012 bytes allocated
+==2111569== 
+==2111569== All heap blocks were freed -- no leaks are possible
+==2111569== 
+==2111569== For lists of detected and suppressed errors, rerun with: -s
+==2111569== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+
+# valgrind test for letters-1
+valgrind  ./indextest testing/letters-1.index testing/letters-1-test.index
+==2111591== Memcheck, a memory error detector
+==2111591== Copyright (C) 2002-2022, and GNU GPL'd, by Julian Seward et al.
+==2111591== Using Valgrind-3.22.0 and LibVEX; rerun with -h for copyright info
+==2111591== Command: ./indextest testing/letters-1.index testing/letters-1-test.index
+==2111591== 
+Successfully loaded index from testing/letters-1.index and saved it to testing/letters-1-test.index
+==2111591== 
+==2111591== HEAP SUMMARY:
+==2111591==     in use at exit: 0 bytes in 0 blocks
+==2111591==   total heap usage: 117 allocs, 117 frees, 30,894 bytes allocated
+==2111591== 
+==2111591== All heap blocks were freed -- no leaks are possible
+==2111591== 
+==2111591== For lists of detected and suppressed errors, rerun with: -s
+==2111591== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+
+# valgrind test for letters-2
+valgrind  ./indextest testing/letters-2.index testing/letters-2-test.index
+==2111601== Memcheck, a memory error detector
+==2111601== Copyright (C) 2002-2022, and GNU GPL'd, by Julian Seward et al.
+==2111601== Using Valgrind-3.22.0 and LibVEX; rerun with -h for copyright info
+==2111601== Command: ./indextest testing/letters-2.index testing/letters-2-test.index
+==2111601== 
+Successfully loaded index from testing/letters-2.index and saved it to testing/letters-2-test.index
+==2111601== 
+==2111601== HEAP SUMMARY:
+==2111601==     in use at exit: 0 bytes in 0 blocks
+==2111601==   total heap usage: 117 allocs, 117 frees, 30,894 bytes allocated
+==2111601== 
+==2111601== All heap blocks were freed -- no leaks are possible
+==2111601== 
+==2111601== For lists of detected and suppressed errors, rerun with: -s
+==2111601== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+
+# valgrind test for toscrape-1
+valgrind  ./indextest testing/toscrape-1.index testing/toscrape-1-test.index
+==2111604== Memcheck, a memory error detector
+==2111604== Copyright (C) 2002-2022, and GNU GPL'd, by Julian Seward et al.
+==2111604== Using Valgrind-3.22.0 and LibVEX; rerun with -h for copyright info
+==2111604== Command: ./indextest testing/toscrape-1.index testing/toscrape-1-test.index
+==2111604== 
+Successfully loaded index from testing/toscrape-1.index and saved it to testing/toscrape-1-test.index
+==2111604== 
+==2111604== HEAP SUMMARY:
+==2111604==     in use at exit: 0 bytes in 0 blocks
+==2111604==   total heap usage: 19,481 allocs, 19,481 frees, 298,006 bytes allocated
+==2111604== 
+==2111604== All heap blocks were freed -- no leaks are possible
+==2111604== 
+==2111604== For lists of detected and suppressed errors, rerun with: -s
+==2111604== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+
+# valgrind test for wikipedia-1
+valgrind  ./indextest testing/wikipedia-1.index testing/wikipedia-1-test.index
+==2111606== Memcheck, a memory error detector
+==2111606== Copyright (C) 2002-2022, and GNU GPL'd, by Julian Seward et al.
+==2111606== Using Valgrind-3.22.0 and LibVEX; rerun with -h for copyright info
+==2111606== Command: ./indextest testing/wikipedia-1.index testing/wikipedia-1-test.index
+==2111606== 
+Successfully loaded index from testing/wikipedia-1.index and saved it to testing/wikipedia-1-test.index
+==2111606== 
+==2111606== HEAP SUMMARY:
+==2111606==     in use at exit: 0 bytes in 0 blocks
+==2111606==   total heap usage: 39,034 allocs, 39,034 frees, 551,478 bytes allocated
+==2111606== 
+==2111606== All heap blocks were freed -- no leaks are possible
+==2111606== 
+==2111606== For lists of detected and suppressed errors, rerun with: -s
+==2111606== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+
+################## Test 3: function test #######################
+# indextest for letters-0
+./indextest testing/letters-0.index testing/letters-0-test.index
+Successfully loaded index from testing/letters-0.index and saved it to testing/letters-0-test.index
+~/cs50-dev/shared/tse/indexcmp testing/letters-0.index testing/letters-0-test.index
+
+# indextest for letters-1
+./indextest testing/letters-1.index testing/letters-1-test.index
+Successfully loaded index from testing/letters-1.index and saved it to testing/letters-1-test.index
+~/cs50-dev/shared/tse/indexcmp testing/letters-1.index testing/letters-1-test.index
+
+# indextest for letters-2
+./indextest testing/letters-2.index testing/letters-2-test.index
+Successfully loaded index from testing/letters-2.index and saved it to testing/letters-2-test.index
+~/cs50-dev/shared/tse/indexcmp testing/letters-2.index testing/letters-2-test.index
+
+# indextest for toscrape-1
+./indextest testing/toscrape-1.index testing/toscrape-1-test.index
+Successfully loaded index from testing/toscrape-1.index and saved it to testing/toscrape-1-test.index
+~/cs50-dev/shared/tse/indexcmp testing/toscrape-1.index testing/toscrape-1-test.index
+
+# indextest for wikipedia-1
+./indextest testing/wikipedia-1.index testing/wikipedia-1-test.index
+Successfully loaded index from testing/wikipedia-1.index and saved it to testing/wikipedia-1-test.index
+~/cs50-dev/shared/tse/indexcmp testing/wikipedia-1.index testing/wikipedia-1-test.index
