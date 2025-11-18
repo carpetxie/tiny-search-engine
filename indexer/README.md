@@ -1,6 +1,6 @@
 # CS50 FA25 Final Project TSE Indexer
-## Author: Cindy Jiayi Liu
-## Date: 2025.11.16
+### Author: Cindy Jiayi Liu
+### Date: 2025.11.16
 
 This module is the second part of tiny search engine final project, the indexer.
 The implementation Document: [IMPLEMENTATION.md]
@@ -43,4 +43,8 @@ Requirement Specs: [REQUIREMENTS.md](https://github.com/CS50DartmouthFA2025/home
 
 Design Specs: [DESIGN.md](https://github.com/CS50DartmouthFA2025/home/blob/main/labs/tse/indexer/DESIGN.md)
 
-AI Assistance: Claude and Chat GPT is used in planning file hierachies, generating documentation for README.md and IMPLEMENTATION.md, and debugging overall codes.
+AI Assistance: Claude and Chat GPT is used in 
+- planning file hierachies
+- creating testing samples
+- generating documentation for README.md and IMPLEMENTATION.md
+- debugging overall codes.
