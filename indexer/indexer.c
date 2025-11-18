@@ -4,8 +4,6 @@
  * Date: 2025.11.15
  */ 
 
- // declarations
-
  #include <stdio.h>
  #include <stdlib.h>
  #include "../libcs50/webpage.h"
