@@ -34,12 +34,12 @@ The crawler follows this algorithm:
 3. Create a hashtable (`pagesSeen`) to track which URLs have already been visited
 4. Create a bag (`pagesToCrawl`) and insert the seed webpage at depth 0
 5. While the bag is not empty: 
-- Remove a webapge from the bag 
-- Fetch its HTML 
-- Save it in `pageDirectory`
-- If te page depth is less than `maxDepth`, scan its HTML for links 
-- Normalize and check each discovered URL 
-- If the URL is internal and not yet seen, add it to the hashtable and bag 
+    - Remove a webapge from the bag 
+    - Fetch its HTML 
+    - Save it in `pageDirectory`
+    - If te page depth is less than `maxDepth`, scan its HTML for links 
+    - Normalize and check each discovered URL 
+    - If the URL is internal and not yet seen, add it to the hashtable and bag 
 6. Free all allocated data structures 
 
 Pages are saved using the `pagedir_save()` function, which writes the URL, depth, and full HTML into files named 1, 2, 3, ad so on. 
