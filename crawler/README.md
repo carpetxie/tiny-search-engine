@@ -44,6 +44,13 @@ The crawler follows this algorithm:
 
 Pages are saved using the `pagedir_save()` function, which writes the URL, depth, and full HTML into files named 1, 2, 3, ad so on. 
 
+### Differences from Spec
+
+* The crawler exits using exit() with non-zero codes on error rather than returning error codes from main. This still satisfies the spec requirement to exit non-zero for invalid usage. 
+* Failed fetches are not retired; the crawler prints a warning and continues. 
+* Normalized URLs are sometimes printed after freeing the original raw URL; this is handled safely, but output ordering may differ slightly from the spec. 
+* Extreme pages with thousands of links may slow the crawler due to repeated normalization and hashing. 
+
 ### Assumptions 
 
 * The seed URL mus tbe internal and reachable. 
