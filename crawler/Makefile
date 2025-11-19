@@ -63,3 +63,8 @@ clean:
 test: $(PROG)
 	bash -v testing.sh > testing.out 2>&1
 	@echo "Testing complete; results saved to testing.out"
+
+# ------------ valgrind ------------
+valgrind: $(PROG)
+	mkdir -p ../data/valgrind-letters-0
+	$(VALGRIND) ./crawler http://cs50tse.cs.dartmouth.edu/tse/letters/index.html ../data/valgrind-letters-0 0
