@@ -59,7 +59,7 @@ crawler.o: crawler.c ../common/pagedir.h \
 clean:
 	rm -f *~ *.o $(PROG)
 
-# ------------ test (runs testing.sh -> testing.out) ------------
+# ------------ test (runs testing.sh > testing.out) ------------
 test: $(PROG)
 	bash -v testing.sh > testing.out 2>&1
 	@echo "Testing complete; results saved to testing.out"
