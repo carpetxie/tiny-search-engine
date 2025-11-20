@@ -37,12 +37,13 @@ int main(const int argc, char* argv[])
 static void
 parseArgs(const int argc, char* argv[], char** seedURL, char** pageDirectory, int* maxDepth)
 {
-    // check number of args
+    // check valid number of args
     if (argc != 4) {
         fprintf(stderr, "Usage: %s seedURL pageDirectory maxDepth\n", argv[0]);
         exit(1);
     }
 
+    // extract arguments
     char* rawURL = argv[1];
     char* dir    = argv[2];
     char* depthStr = argv[3];
@@ -82,15 +83,14 @@ parseArgs(const int argc, char* argv[], char** seedURL, char** pageDirectory, in
 
     // success: fill out parameters
     *seedURL       = normURL;  // caller (via webpage) will free this
-    *pageDirectory = dir;      // pointer into argv, no need to free
+    *pageDirectory = dir;      // pointer into argv, don't need to free
     *maxDepth      = depth;
 }
 
 /**************** crawl ****************/
-/* Core crawler:
- * - initialize hashtable of seen URLs and bag of pages to crawl
- * - add seedURL as depth 0
- * - repeatedly fetch, save, and scan pages until bag is empty
+/* Initialize hashtable of seen URLs and bag of pages to crawl; 
+ * add seedURL as depth 0; 
+ * repeatedly fetch, save, and scan pages until bag is empty
  */
 static void
 crawl(char* seedURL, char* pageDirectory, const int maxDepth)
@@ -99,7 +99,7 @@ crawl(char* seedURL, char* pageDirectory, const int maxDepth)
     hashtable_t* pagesSeen = hashtable_new(200);
     if (pagesSeen == NULL) {
         fprintf(stderr, "Error: could not allocate pagesSeen hashtable\n");
-        exit(2);
+        exit(2); // non-zero exit 
     }
 
     // record the seed URL as seen
@@ -110,7 +110,7 @@ crawl(char* seedURL, char* pageDirectory, const int maxDepth)
     if (pagesToCrawl == NULL) {
         fprintf(stderr, "Error: could not allocate pagesToCrawl bag\n");
         hashtable_delete(pagesSeen, NULL);
-        exit(2);
+        exit(2); // non-zero exit 
     }
 
     // create first webpage and insert into bag
@@ -119,7 +119,7 @@ crawl(char* seedURL, char* pageDirectory, const int maxDepth)
         fprintf(stderr, "Error: could not allocate seed webpage\n");
         hashtable_delete(pagesSeen, NULL);
         bag_delete(pagesToCrawl, NULL);
-        exit(2);
+        exit(2); // non-zero exit 
     }
     bag_insert(pagesToCrawl, seedPage);
 
@@ -127,7 +127,7 @@ crawl(char* seedURL, char* pageDirectory, const int maxDepth)
     webpage_t* page;
 
     // main crawl loop
-    while ( (page = bag_extract(pagesToCrawl)) != NULL ) {
+    while ((page = bag_extract(pagesToCrawl)) != NULL ) {
 
         if (webpage_fetch(page)) {
             // fetched successfully
@@ -150,15 +150,13 @@ crawl(char* seedURL, char* pageDirectory, const int maxDepth)
     }
 
     // clean up
-    hashtable_delete(pagesSeen, NULL);      // values are string literals, don’t free
-    bag_delete(pagesToCrawl, NULL);        // bag should now be empty
+    hashtable_delete(pagesSeen, NULL); 
+    bag_delete(pagesToCrawl, NULL);
 }
 
 /**************** pageScan ****************/
 /* Given a fetched webpage, scan for URLs.
- * For each internal URL not yet seen:
- *   - insert into hashtable pagesSeen
- *   - create a new webpage_t at depth+1 and insert into bag pagesToCrawl
+ * For each internal URL not yet seen, insert into hashtable pagesSeen and create a new webpage_t at depth+1 and insert into bag pagesToCrawl
  */
 static void
 pageScan(webpage_t* page, bag_t* pagesToCrawl, hashtable_t* pagesSeen)
@@ -188,14 +186,14 @@ pageScan(webpage_t* page, bag_t* pagesToCrawl, hashtable_t* pagesSeen)
 
         // internal URL
         if (hashtable_insert(pagesSeen, url, "")) {
-            // url is new; create a webpage_t that takes ownership of `url`
+            // url is new -> create a webpage_t that takes ownership of `url`
             webpage_t* newPage = webpage_new(url, nextDepth, NULL);
             if (newPage != NULL) {
                 bag_insert(pagesToCrawl, newPage);
                 printf("Added: %s\n", url);
                 // DO NOT free(url); webpage_delete(newPage) will free it later
             } else {
-                // allocation failed; avoid leak
+                // allocation failed -> avoid leak
                 free(url);
             }
         } 
@@ -205,6 +203,6 @@ pageScan(webpage_t* page, bag_t* pagesToCrawl, hashtable_t* pagesSeen)
             free(url);
         }
 
-        free(rawURL);  // always safe to free here
+        free(rawURL);  // free here to be safe 
     }
 }
