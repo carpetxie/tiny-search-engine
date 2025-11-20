@@ -7,9 +7,9 @@
 #include "pagedir.h"
 
 /**************** local helper ****************/
-/* buildPath
+/* buildPath: 
  * Allocate and return a new string "pageDirectory/docIDorName".
- * Caller is responsible for free()ing the result.
+ * Caller is responsible for freeing the result.
  */
 static char*
 buildPath(const char* pageDirectory, const char* name)
@@ -33,17 +33,17 @@ buildPath(const char* pageDirectory, const char* name)
 bool
 pagedir_init(const char* pageDirectory)
 {
-    if (pageDirectory == NULL) {
+    if (pageDirectory == NULL) { // null argument 
         return false;
     }
 
     char* crawlerPath = buildPath(pageDirectory, ".crawler");
-    if (crawlerPath == NULL) {
+    if (crawlerPath == NULL) { // null path 
         return false;
     }
 
     FILE* fp = fopen(crawlerPath, "w");
-    if (fp == NULL) {
+    if (fp == NULL) { // null file (cannot open)
         free(crawlerPath);
         return false;
     }
@@ -57,7 +57,7 @@ pagedir_init(const char* pageDirectory)
 void
 pagedir_save(const webpage_t* page, const char* pageDirectory, const int docID)
 {
-    if (page == NULL || pageDirectory == NULL) {
+    if (page == NULL || pageDirectory == NULL) { // null arguments 
         return;
     }
 
