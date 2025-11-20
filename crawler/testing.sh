@@ -9,15 +9,18 @@ make
 
 CRAWLER=./crawler
 
-# Example CS50 TSE seed URLs (change if your course uses different ones)
+# TSE seed URLs
 LETTERS="http://cs50tse.cs.dartmouth.edu/tse/letters/index.html"
 TOSCRAPE="http://cs50tse.cs.dartmouth.edu/tse/toscrape/index.html"
 WIKI="http://cs50tse.cs.dartmouth.edu/tse/wikipedia/index.html"
 
-# Create some pageDirectories (must exist before running crawler)
+# Create pageDirectories (must exist before running crawler)
 mkdir -p ../data/letters-0
 mkdir -p ../data/letters-1
+mkdir -p ../data/toscrape-0
 mkdir -p ../data/toscrape-1
+mkdir -p ../data/wiki-0
+mkdir -p ../data/wiki-1
 
 echo
 echo "### Part 1: bad argument tests"
@@ -57,8 +60,22 @@ echo "8) letters at depth 1"
 $CRAWLER "$LETTERS" ../data/letters-1 1
 echo
 
-echo "9) toscrape at depth 1"
+echo "9) toscrape at depth 0"
+$CRAWLER "$TOSCRAPE" ../data/toscrape-1 0
+echo
+
+echo "10) toscrape at depth 1"
 $CRAWLER "$TOSCRAPE" ../data/toscrape-1 1
 echo
+
+echo "11) wikipedia at depth 0"
+$CRAWLER "$WIKI" ../data/wiki-0 0
+echo
+
+echo "12) wikipedia at depth 1"
+$CRAWLER "$WIKI" ../data/wiki-1 1
+echo
+
+echo "### Valgrind - see Makefile, run separately 'make valgrind'"
 
 echo "### Done testing."
