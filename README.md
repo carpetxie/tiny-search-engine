@@ -1,5 +1,5 @@
 ﻿# tiny-search-engine
-### Author: Group 1 (Jeffery Xie, William Bowels, Cindy Jiayi Liu, Catherine Chun) 
+### Author: (Jeffery Xie, William Bowels, Cindy Jiayi Liu, Catherine Chun) 
 ### CS50 FA25 Final Project
 ### Date: 2025.11.16
 

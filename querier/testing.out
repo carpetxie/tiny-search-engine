@@ -3,15 +3,6 @@
 # Author: William Bowles and Jeffrey Xie
 # Date: 2025.11.22
 
-# Test with invalid arguments
-echo "=== Test with invalid number of arguments ==="
-=== Test with invalid number of arguments ===
-./querier
-Invalid parameters.
-./querier one
-Invalid parameters.
-./querier one two three
-Invalid parameters.
 
 # Test with invalid pageDirectory
 echo ""
@@ -21,7 +12,7 @@ echo "=== Test with invalid pageDirectory ==="
 ./querier /nonexistent /cs50/shared/tse/output/toscrape-index-1
 pageDirectory formatted incorrectly.
 
-# Test with invalid indexFilename
+# Ivalid indexFilename
 echo ""
 
 echo "=== Test with invalid indexFilename ==="
@@ -29,28 +20,12 @@ echo "=== Test with invalid indexFilename ==="
 ./querier /cs50/shared/tse/output/toscrape-1 /nonexistent
 pageDirectory formatted incorrectly.
 
-# Test with valid inputs - simple queries
+# Valid inputs with  simple queries
 echo ""
 
 echo "=== Test with valid inputs - simple queries ==="
 === Test with valid inputs - simple queries ===
 echo "home" | ./querier /cs50/shared/tse/output/toscrape-1 /cs50/shared/tse/output/toscrape-index-1
-pageDirectory formatted incorrectly.
-
-# Test with AND operator
-echo ""
-
-echo "=== Test with AND operator ==="
-=== Test with AND operator ===
-echo "search and engine" | ./querier /cs50/shared/tse/output/toscrape-1 /cs50/shared/tse/output/toscrape-index-1
-pageDirectory formatted incorrectly.
-
-# Test with OR operator
-echo ""
-
-echo "=== Test with OR operator ==="
-=== Test with OR operator ===
-echo "home or search" | ./querier /cs50/shared/tse/output/toscrape-1 /cs50/shared/tse/output/toscrape-index-1
 pageDirectory formatted incorrectly.
 
 # Test with AND precedence over OR
@@ -61,7 +36,7 @@ echo "=== Test with AND precedence over OR ==="
 echo "computer science or programming language" | ./querier /cs50/shared/tse/output/toscrape-1 /cs50/shared/tse/output/toscrape-index-1
 pageDirectory formatted incorrectly.
 
-# Test error cases - bad characters
+# Bad characters
 echo ""
 
 echo "=== Test error: bad character ==="
@@ -69,7 +44,7 @@ echo "=== Test error: bad character ==="
 echo "hello!" | ./querier /cs50/shared/tse/output/toscrape-1 /cs50/shared/tse/output/toscrape-index-1
 pageDirectory formatted incorrectly.
 
-# Test error cases - and/or at start
+# And/or at start
 echo ""
 
 echo "=== Test error: and at start ==="
@@ -77,7 +52,7 @@ echo "=== Test error: and at start ==="
 echo "and hello" | ./querier /cs50/shared/tse/output/toscrape-1 /cs50/shared/tse/output/toscrape-index-1
 pageDirectory formatted incorrectly.
 
-# Test error cases - and/or at end
+# Ad/or at end
 echo ""
 
 echo "=== Test error: or at end ==="
@@ -85,7 +60,7 @@ echo "=== Test error: or at end ==="
 echo "hello or" | ./querier /cs50/shared/tse/output/toscrape-1 /cs50/shared/tse/output/toscrape-index-1
 pageDirectory formatted incorrectly.
 
-# Test error cases - adjacent operators
+# Adjacent operators
 echo ""
 
 echo "=== Test error: adjacent operators ==="
@@ -93,16 +68,4 @@ echo "=== Test error: adjacent operators ==="
 echo "hello and or world" | ./querier /cs50/shared/tse/output/toscrape-1 /cs50/shared/tse/output/toscrape-index-1
 pageDirectory formatted incorrectly.
 
-# Test with empty query
-echo ""
-
-echo "=== Test with empty query ==="
-=== Test with empty query ===
-echo "" | ./querier /cs50/shared/tse/output/toscrape-1 /cs50/shared/tse/output/toscrape-index-1
-pageDirectory formatted incorrectly.
-
-echo ""
-
-echo "=== Testing complete ==="
-=== Testing complete ===
 
