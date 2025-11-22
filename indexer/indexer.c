@@ -6,6 +6,7 @@
 
  #include <stdio.h>
  #include <stdlib.h>
+ #include <string.h>
  #include "../libcs50/webpage.h"
  #include "../common/index.h"
  #include "../common/pagedir.h"
