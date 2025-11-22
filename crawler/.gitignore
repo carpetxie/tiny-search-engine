@@ -1,5 +1,5 @@
 crawler
 *.o
 *~
-testing.out
 core
+# Note: testing.out is required by assignment and should be committed
