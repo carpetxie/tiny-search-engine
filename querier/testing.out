@@ -1,11 +1,12 @@
 #!/bin/bash
 # testing.sh - test script for querier
-# Author: William Bowles and Jeffrey Xie
-# Date: 2025.11.22
 
-# Test with invalid arguments
-echo "=== Test with invalid number of arguments ==="
-=== Test with invalid number of arguments ===
+# paths to local test data
+PAGEDIR="./toscrape-1"
+INDEXFILE="./toscrape-1.index"
+
+echo "=== Test: invalid number of arguments ==="
+=== Test: invalid number of arguments ===
 ./querier
 Invalid parameters.
 ./querier one
@@ -13,96 +14,242 @@ Invalid parameters.
 ./querier one two three
 Invalid parameters.
 
-# Test with invalid pageDirectory
-echo ""
+echo
 
-echo "=== Test with invalid pageDirectory ==="
-=== Test with invalid pageDirectory ===
-./querier /nonexistent /cs50/shared/tse/output/toscrape-index-1
+echo "=== Test: invalid pageDirectory ==="
+=== Test: invalid pageDirectory ===
+./querier /nonexistent "$INDEXFILE"
 pageDirectory formatted incorrectly.
 
-# Test with invalid indexFilename
-echo ""
+echo
 
-echo "=== Test with invalid indexFilename ==="
-=== Test with invalid indexFilename ===
-./querier /cs50/shared/tse/output/toscrape-1 /nonexistent
-pageDirectory formatted incorrectly.
+echo "=== Test: invalid indexFilename ==="
+=== Test: invalid indexFilename ===
+./querier "$PAGEDIR" /nonexistent
+indexFilename invalid.
 
-# Test with valid inputs - simple queries
-echo ""
+echo
 
-echo "=== Test with valid inputs - simple queries ==="
-=== Test with valid inputs - simple queries ===
-echo "home" | ./querier /cs50/shared/tse/output/toscrape-1 /cs50/shared/tse/output/toscrape-index-1
-pageDirectory formatted incorrectly.
+echo "=== Test: valid inputs - simple query ==="
+=== Test: valid inputs - simple query ===
+echo "home" | ./querier "$PAGEDIR" "$INDEXFILE"
+Query? Query: home 
+score  2  doc  3: http://cs50tse.cs.dartmouth.edu/tse/toscrape/catalogue/its-only-the-himalayas_981/index.html
+score  2  doc  14: http://cs50tse.cs.dartmouth.edu/tse/toscrape/catalogue/the-boys-in-the-boat-nine-americans-and-their-epic-quest-for-gold-at-the-1936-berlin-olympics_992/index.html
+score  2  doc  41: http://cs50tse.cs.dartmouth.edu/tse/toscrape/catalogue/category/books/food-and-drink_33/index.html
+score  2  doc  43: http://cs50tse.cs.dartmouth.edu/tse/toscrape/catalogue/category/books/horror_31/index.html
+score  2  doc  66: http://cs50tse.cs.dartmouth.edu/tse/toscrape/catalogue/category/books/romance_8/index.html
+score  1  doc  1: http://cs50tse.cs.dartmouth.edu/tse/toscrape/
+score  1  doc  2: http://cs50tse.cs.dartmouth.edu/tse/toscrape/catalogue/page-2.html
+score  1  doc  4: http://cs50tse.cs.dartmouth.edu/tse/toscrape/catalogue/libertarianism-for-beginners_982/index.html
+score  1  doc  5: http://cs50tse.cs.dartmouth.edu/tse/toscrape/catalogue/mesaerion-the-best-science-fiction-stories-1800-1849_983/index.html
+score  1  doc  6: http://cs50tse.cs.dartmouth.edu/tse/toscrape/catalogue/olio_984/index.html
+score  1  doc  7: http://cs50tse.cs.dartmouth.edu/tse/toscrape/catalogue/our-band-could-be-your-life-scenes-from-the-american-indie-underground-1981-1991_985/index.html
+score  1  doc  8: http://cs50tse.cs.dartmouth.edu/tse/toscrape/catalogue/rip-it-up-and-start-again_986/index.html
+score  1  doc  9: http://cs50tse.cs.dartmouth.edu/tse/toscrape/catalogue/scott-pilgrims-precious-little-life-scott-pilgrim-1_987/index.html
+score  1  doc  10: http://cs50tse.cs.dartmouth.edu/tse/toscrape/catalogue/set-me-free_988/index.html
+score  1  doc  11: http://cs50tse.cs.dartmouth.edu/tse/toscrape/catalogue/shakespeares-sonnets_989/index.html
+score  1  doc  12: http://cs50tse.cs.dartmouth.edu/tse/toscrape/catalogue/starving-hearts-triangular-trade-trilogy-1_990/index.html
+score  1  doc  13: http://cs50tse.cs.dartmouth.edu/tse/toscrape/catalogue/the-black-maria_991/index.html
+score  1  doc  15: http://cs50tse.cs.dartmouth.edu/tse/toscrape/catalogue/the-coming-woman-a-novel-based-on-the-life-of-the-infamous-feminist-victoria-woodhull_993/index.html
+score  1  doc  16: http://cs50tse.cs.dartmouth.edu/tse/toscrape/catalogue/the-dirty-little-secrets-of-getting-your-dream-job_994/index.html
+score  1  doc  17: http://cs50tse.cs.dartmouth.edu/tse/toscrape/catalogue/the-requiem-red_995/index.html
+score  1  doc  18: http://cs50tse.cs.dartmouth.edu/tse/toscrape/catalogue/sapiens-a-brief-history-of-humankind_996/index.html
+score  1  doc  19: http://cs50tse.cs.dartmouth.edu/tse/toscrape/catalogue/sharp-objects_997/index.html
+score  1  doc  20: http://cs50tse.cs.dartmouth.edu/tse/toscrape/catalogue/soumission_998/index.html
+score  1  doc  21: http://cs50tse.cs.dartmouth.edu/tse/toscrape/catalogue/tipping-the-velvet_999/index.html
+score  1  doc  22: http://cs50tse.cs.dartmouth.edu/tse/toscrape/catalogue/a-light-in-the-attic_1000/index.html
+score  1  doc  23: http://cs50tse.cs.dartmouth.edu/tse/toscrape/catalogue/category/books/crime_51/index.html
+score  1  doc  24: http://cs50tse.cs.dartmouth.edu/tse/toscrape/catalogue/category/books/erotica_50/index.html
+score  1  doc  25: http://cs50tse.cs.dartmouth.edu/tse/toscrape/catalogue/category/books/cultural_49/index.html
+score  1  doc  26: http://cs50tse.cs.dartmouth.edu/tse/toscrape/catalogue/category/books/politics_48/index.html
+score  1  doc  27: http://cs50tse.cs.dartmouth.edu/tse/toscrape/catalogue/category/books/health_47/index.html
+score  1  doc  28: http://cs50tse.cs.dartmouth.edu/tse/toscrape/catalogue/category/books/novels_46/index.html
+score  1  doc  29: http://cs50tse.cs.dartmouth.edu/tse/toscrape/catalogue/category/books/short-stories_45/index.html
+score  1  doc  30: http://cs50tse.cs.dartmouth.edu/tse/toscrape/catalogue/category/books/suspense_44/index.html
+score  1  doc  31: http://cs50tse.cs.dartmouth.edu/tse/toscrape/catalogue/category/books/christian_43/index.html
+score  1  doc  32: http://cs50tse.cs.dartmouth.edu/tse/toscrape/catalogue/category/books/historical_42/index.html
+score  1  doc  33: http://cs50tse.cs.dartmouth.edu/tse/toscrape/catalogue/category/books/self-help_41/index.html
+score  1  doc  34: http://cs50tse.cs.dartmouth.edu/tse/toscrape/catalogue/category/books/academic_40/index.html
+score  1  doc  35: http://cs50tse.cs.dartmouth.edu/tse/toscrape/catalogue/category/books/spirituality_39/index.html
+score  1  doc  36: http://cs50tse.cs.dartmouth.edu/tse/toscrape/catalogue/category/books/contemporary_38/index.html
+score  1  doc  37: http://cs50tse.cs.dartmouth.edu/tse/toscrape/catalogue/category/books/thriller_37/index.html
+score  1  doc  38: http://cs50tse.cs.dartmouth.edu/tse/toscrape/catalogue/category/books/biography_36/index.html
+score  1  doc  39: http://cs50tse.cs.dartmouth.edu/tse/toscrape/catalogue/category/books/business_35/index.html
+score  1  doc  40: http://cs50tse.cs.dartmouth.edu/tse/toscrape/catalogue/category/books/christian-fiction_34/index.html
+score  1  doc  42: http://cs50tse.cs.dartmouth.edu/tse/toscrape/catalogue/category/books/history_32/index.html
+score  1  doc  44: http://cs50tse.cs.dartmouth.edu/tse/toscrape/catalogue/category/books/humor_30/index.html
+score  1  doc  45: http://cs50tse.cs.dartmouth.edu/tse/toscrape/catalogue/category/books/adult-fiction_29/index.html
+score  1  doc  46: http://cs50tse.cs.dartmouth.edu/tse/toscrape/catalogue/category/books/parenting_28/index.html
+score  1  doc  47: http://cs50tse.cs.dartmouth.edu/tse/toscrape/catalogue/category/books/autobiography_27/index.html
+score  1  doc  48: http://cs50tse.cs.dartmouth.edu/tse/toscrape/catalogue/category/books/psychology_26/index.html
+score  1  doc  49: http://cs50tse.cs.dartmouth.edu/tse/toscrape/catalogue/category/books/art_25/index.html
+score  1  doc  50: http://cs50tse.cs.dartmouth.edu/tse/toscrape/catalogue/category/books/paranormal_24/index.html
+score  1  doc  51: http://cs50tse.cs.dartmouth.edu/tse/toscrape/catalogue/category/books/poetry_23/index.html
+score  1  doc  52: http://cs50tse.cs.dartmouth.edu/tse/toscrape/catalogue/category/books/science_22/index.html
+score  1  doc  53: http://cs50tse.cs.dartmouth.edu/tse/toscrape/catalogue/category/books/young-adult_21/index.html
+score  1  doc  54: http://cs50tse.cs.dartmouth.edu/tse/toscrape/catalogue/category/books/new-adult_20/index.html
+score  1  doc  55: http://cs50tse.cs.dartmouth.edu/tse/toscrape/catalogue/category/books/fantasy_19/index.html
+score  1  doc  56: http://cs50tse.cs.dartmouth.edu/tse/toscrape/catalogue/category/books/add-a-comment_18/index.html
+score  1  doc  57: http://cs50tse.cs.dartmouth.edu/tse/toscrape/catalogue/category/books/sports-and-games_17/index.html
+score  1  doc  58: http://cs50tse.cs.dartmouth.edu/tse/toscrape/catalogue/category/books/science-fiction_16/index.html
+score  1  doc  59: http://cs50tse.cs.dartmouth.edu/tse/toscrape/catalogue/category/books/default_15/index.html
+score  1  doc  60: http://cs50tse.cs.dartmouth.edu/tse/toscrape/catalogue/category/books/music_14/index.html
+score  1  doc  61: http://cs50tse.cs.dartmouth.edu/tse/toscrape/catalogue/category/books/nonfiction_13/index.html
+score  1  doc  62: http://cs50tse.cs.dartmouth.edu/tse/toscrape/catalogue/category/books/religion_12/index.html
+score  1  doc  63: http://cs50tse.cs.dartmouth.edu/tse/toscrape/catalogue/category/books/childrens_11/index.html
+score  1  doc  64: http://cs50tse.cs.dartmouth.edu/tse/toscrape/catalogue/category/books/fiction_10/index.html
+score  1  doc  65: http://cs50tse.cs.dartmouth.edu/tse/toscrape/catalogue/category/books/womens-fiction_9/index.html
+score  1  doc  67: http://cs50tse.cs.dartmouth.edu/tse/toscrape/catalogue/category/books/philosophy_7/index.html
+score  1  doc  68: http://cs50tse.cs.dartmouth.edu/tse/toscrape/catalogue/category/books/classics_6/index.html
+score  1  doc  69: http://cs50tse.cs.dartmouth.edu/tse/toscrape/catalogue/category/books/sequential-art_5/index.html
+score  1  doc  70: http://cs50tse.cs.dartmouth.edu/tse/toscrape/catalogue/category/books/historical-fiction_4/index.html
+score  1  doc  71: http://cs50tse.cs.dartmouth.edu/tse/toscrape/catalogue/category/books/mystery_3/index.html
+score  1  doc  72: http://cs50tse.cs.dartmouth.edu/tse/toscrape/catalogue/category/books/travel_2/index.html
+score  1  doc  73: http://cs50tse.cs.dartmouth.edu/tse/toscrape/catalogue/category/books_1/index.html
+score  1  doc  74: http://cs50tse.cs.dartmouth.edu/tse/toscrape/index.html
 
-# Test with AND operator
-echo ""
+Query? 
+echo
 
-echo "=== Test with AND operator ==="
-=== Test with AND operator ===
-echo "search and engine" | ./querier /cs50/shared/tse/output/toscrape-1 /cs50/shared/tse/output/toscrape-index-1
-pageDirectory formatted incorrectly.
+echo "=== Test: AND operator ==="
+=== Test: AND operator ===
+echo "search and engine" | ./querier "$PAGEDIR" "$INDEXFILE"
+Query? Query: search and engine 
+No documents match.
 
-# Test with OR operator
-echo ""
+Query? 
+echo
 
-echo "=== Test with OR operator ==="
-=== Test with OR operator ===
-echo "home or search" | ./querier /cs50/shared/tse/output/toscrape-1 /cs50/shared/tse/output/toscrape-index-1
-pageDirectory formatted incorrectly.
+echo "=== Test: OR operator ==="
+=== Test: OR operator ===
+echo "home or search" | ./querier "$PAGEDIR" "$INDEXFILE"
+Query? Query: home or search 
+score  4  doc  66: http://cs50tse.cs.dartmouth.edu/tse/toscrape/catalogue/category/books/romance_8/index.html
+score  3  doc  16: http://cs50tse.cs.dartmouth.edu/tse/toscrape/catalogue/the-dirty-little-secrets-of-getting-your-dream-job_994/index.html
+score  3  doc  41: http://cs50tse.cs.dartmouth.edu/tse/toscrape/catalogue/category/books/food-and-drink_33/index.html
+score  3  doc  43: http://cs50tse.cs.dartmouth.edu/tse/toscrape/catalogue/category/books/horror_31/index.html
+score  2  doc  1: http://cs50tse.cs.dartmouth.edu/tse/toscrape/
+score  2  doc  2: http://cs50tse.cs.dartmouth.edu/tse/toscrape/catalogue/page-2.html
+score  2  doc  3: http://cs50tse.cs.dartmouth.edu/tse/toscrape/catalogue/its-only-the-himalayas_981/index.html
+score  2  doc  14: http://cs50tse.cs.dartmouth.edu/tse/toscrape/catalogue/the-boys-in-the-boat-nine-americans-and-their-epic-quest-for-gold-at-the-1936-berlin-olympics_992/index.html
+score  2  doc  23: http://cs50tse.cs.dartmouth.edu/tse/toscrape/catalogue/category/books/crime_51/index.html
+score  2  doc  24: http://cs50tse.cs.dartmouth.edu/tse/toscrape/catalogue/category/books/erotica_50/index.html
+score  2  doc  25: http://cs50tse.cs.dartmouth.edu/tse/toscrape/catalogue/category/books/cultural_49/index.html
+score  2  doc  26: http://cs50tse.cs.dartmouth.edu/tse/toscrape/catalogue/category/books/politics_48/index.html
+score  2  doc  27: http://cs50tse.cs.dartmouth.edu/tse/toscrape/catalogue/category/books/health_47/index.html
+score  2  doc  28: http://cs50tse.cs.dartmouth.edu/tse/toscrape/catalogue/category/books/novels_46/index.html
+score  2  doc  29: http://cs50tse.cs.dartmouth.edu/tse/toscrape/catalogue/category/books/short-stories_45/index.html
+score  2  doc  30: http://cs50tse.cs.dartmouth.edu/tse/toscrape/catalogue/category/books/suspense_44/index.html
+score  2  doc  31: http://cs50tse.cs.dartmouth.edu/tse/toscrape/catalogue/category/books/christian_43/index.html
+score  2  doc  32: http://cs50tse.cs.dartmouth.edu/tse/toscrape/catalogue/category/books/historical_42/index.html
+score  2  doc  33: http://cs50tse.cs.dartmouth.edu/tse/toscrape/catalogue/category/books/self-help_41/index.html
+score  2  doc  34: http://cs50tse.cs.dartmouth.edu/tse/toscrape/catalogue/category/books/academic_40/index.html
+score  2  doc  35: http://cs50tse.cs.dartmouth.edu/tse/toscrape/catalogue/category/books/spirituality_39/index.html
+score  2  doc  36: http://cs50tse.cs.dartmouth.edu/tse/toscrape/catalogue/category/books/contemporary_38/index.html
+score  2  doc  37: http://cs50tse.cs.dartmouth.edu/tse/toscrape/catalogue/category/books/thriller_37/index.html
+score  2  doc  38: http://cs50tse.cs.dartmouth.edu/tse/toscrape/catalogue/category/books/biography_36/index.html
+score  2  doc  39: http://cs50tse.cs.dartmouth.edu/tse/toscrape/catalogue/category/books/business_35/index.html
+score  2  doc  40: http://cs50tse.cs.dartmouth.edu/tse/toscrape/catalogue/category/books/christian-fiction_34/index.html
+score  2  doc  42: http://cs50tse.cs.dartmouth.edu/tse/toscrape/catalogue/category/books/history_32/index.html
+score  2  doc  44: http://cs50tse.cs.dartmouth.edu/tse/toscrape/catalogue/category/books/humor_30/index.html
+score  2  doc  45: http://cs50tse.cs.dartmouth.edu/tse/toscrape/catalogue/category/books/adult-fiction_29/index.html
+score  2  doc  46: http://cs50tse.cs.dartmouth.edu/tse/toscrape/catalogue/category/books/parenting_28/index.html
+score  2  doc  47: http://cs50tse.cs.dartmouth.edu/tse/toscrape/catalogue/category/books/autobiography_27/index.html
+score  2  doc  48: http://cs50tse.cs.dartmouth.edu/tse/toscrape/catalogue/category/books/psychology_26/index.html
+score  2  doc  49: http://cs50tse.cs.dartmouth.edu/tse/toscrape/catalogue/category/books/art_25/index.html
+score  2  doc  50: http://cs50tse.cs.dartmouth.edu/tse/toscrape/catalogue/category/books/paranormal_24/index.html
+score  2  doc  51: http://cs50tse.cs.dartmouth.edu/tse/toscrape/catalogue/category/books/poetry_23/index.html
+score  2  doc  52: http://cs50tse.cs.dartmouth.edu/tse/toscrape/catalogue/category/books/science_22/index.html
+score  2  doc  53: http://cs50tse.cs.dartmouth.edu/tse/toscrape/catalogue/category/books/young-adult_21/index.html
+score  2  doc  54: http://cs50tse.cs.dartmouth.edu/tse/toscrape/catalogue/category/books/new-adult_20/index.html
+score  2  doc  55: http://cs50tse.cs.dartmouth.edu/tse/toscrape/catalogue/category/books/fantasy_19/index.html
+score  2  doc  56: http://cs50tse.cs.dartmouth.edu/tse/toscrape/catalogue/category/books/add-a-comment_18/index.html
+score  2  doc  57: http://cs50tse.cs.dartmouth.edu/tse/toscrape/catalogue/category/books/sports-and-games_17/index.html
+score  2  doc  58: http://cs50tse.cs.dartmouth.edu/tse/toscrape/catalogue/category/books/science-fiction_16/index.html
+score  2  doc  59: http://cs50tse.cs.dartmouth.edu/tse/toscrape/catalogue/category/books/default_15/index.html
+score  2  doc  60: http://cs50tse.cs.dartmouth.edu/tse/toscrape/catalogue/category/books/music_14/index.html
+score  2  doc  61: http://cs50tse.cs.dartmouth.edu/tse/toscrape/catalogue/category/books/nonfiction_13/index.html
+score  2  doc  62: http://cs50tse.cs.dartmouth.edu/tse/toscrape/catalogue/category/books/religion_12/index.html
+score  2  doc  63: http://cs50tse.cs.dartmouth.edu/tse/toscrape/catalogue/category/books/childrens_11/index.html
+score  2  doc  64: http://cs50tse.cs.dartmouth.edu/tse/toscrape/catalogue/category/books/fiction_10/index.html
+score  2  doc  65: http://cs50tse.cs.dartmouth.edu/tse/toscrape/catalogue/category/books/womens-fiction_9/index.html
+score  2  doc  67: http://cs50tse.cs.dartmouth.edu/tse/toscrape/catalogue/category/books/philosophy_7/index.html
+score  2  doc  68: http://cs50tse.cs.dartmouth.edu/tse/toscrape/catalogue/category/books/classics_6/index.html
+score  2  doc  69: http://cs50tse.cs.dartmouth.edu/tse/toscrape/catalogue/category/books/sequential-art_5/index.html
+score  2  doc  70: http://cs50tse.cs.dartmouth.edu/tse/toscrape/catalogue/category/books/historical-fiction_4/index.html
+score  2  doc  71: http://cs50tse.cs.dartmouth.edu/tse/toscrape/catalogue/category/books/mystery_3/index.html
+score  2  doc  72: http://cs50tse.cs.dartmouth.edu/tse/toscrape/catalogue/category/books/travel_2/index.html
+score  2  doc  73: http://cs50tse.cs.dartmouth.edu/tse/toscrape/catalogue/category/books_1/index.html
+score  2  doc  74: http://cs50tse.cs.dartmouth.edu/tse/toscrape/index.html
+score  1  doc  4: http://cs50tse.cs.dartmouth.edu/tse/toscrape/catalogue/libertarianism-for-beginners_982/index.html
+score  1  doc  5: http://cs50tse.cs.dartmouth.edu/tse/toscrape/catalogue/mesaerion-the-best-science-fiction-stories-1800-1849_983/index.html
+score  1  doc  6: http://cs50tse.cs.dartmouth.edu/tse/toscrape/catalogue/olio_984/index.html
+score  1  doc  7: http://cs50tse.cs.dartmouth.edu/tse/toscrape/catalogue/our-band-could-be-your-life-scenes-from-the-american-indie-underground-1981-1991_985/index.html
+score  1  doc  8: http://cs50tse.cs.dartmouth.edu/tse/toscrape/catalogue/rip-it-up-and-start-again_986/index.html
+score  1  doc  9: http://cs50tse.cs.dartmouth.edu/tse/toscrape/catalogue/scott-pilgrims-precious-little-life-scott-pilgrim-1_987/index.html
+score  1  doc  10: http://cs50tse.cs.dartmouth.edu/tse/toscrape/catalogue/set-me-free_988/index.html
+score  1  doc  11: http://cs50tse.cs.dartmouth.edu/tse/toscrape/catalogue/shakespeares-sonnets_989/index.html
+score  1  doc  12: http://cs50tse.cs.dartmouth.edu/tse/toscrape/catalogue/starving-hearts-triangular-trade-trilogy-1_990/index.html
+score  1  doc  13: http://cs50tse.cs.dartmouth.edu/tse/toscrape/catalogue/the-black-maria_991/index.html
+score  1  doc  15: http://cs50tse.cs.dartmouth.edu/tse/toscrape/catalogue/the-coming-woman-a-novel-based-on-the-life-of-the-infamous-feminist-victoria-woodhull_993/index.html
+score  1  doc  17: http://cs50tse.cs.dartmouth.edu/tse/toscrape/catalogue/the-requiem-red_995/index.html
+score  1  doc  18: http://cs50tse.cs.dartmouth.edu/tse/toscrape/catalogue/sapiens-a-brief-history-of-humankind_996/index.html
+score  1  doc  19: http://cs50tse.cs.dartmouth.edu/tse/toscrape/catalogue/sharp-objects_997/index.html
+score  1  doc  20: http://cs50tse.cs.dartmouth.edu/tse/toscrape/catalogue/soumission_998/index.html
+score  1  doc  21: http://cs50tse.cs.dartmouth.edu/tse/toscrape/catalogue/tipping-the-velvet_999/index.html
+score  1  doc  22: http://cs50tse.cs.dartmouth.edu/tse/toscrape/catalogue/a-light-in-the-attic_1000/index.html
 
-# Test with AND precedence over OR
-echo ""
+Query? 
+echo
 
-echo "=== Test with AND precedence over OR ==="
-=== Test with AND precedence over OR ===
-echo "computer science or programming language" | ./querier /cs50/shared/tse/output/toscrape-1 /cs50/shared/tse/output/toscrape-index-1
-pageDirectory formatted incorrectly.
+echo "=== Test: AND precedence over OR ==="
+=== Test: AND precedence over OR ===
+echo "computer science or programming language" | ./querier "$PAGEDIR" "$INDEXFILE"
+Query? Query: computer science or programming language 
+No documents match.
 
-# Test error cases - bad characters
-echo ""
+Query? 
+echo
 
-echo "=== Test error: bad character ==="
-=== Test error: bad character ===
-echo "hello!" | ./querier /cs50/shared/tse/output/toscrape-1 /cs50/shared/tse/output/toscrape-index-1
-pageDirectory formatted incorrectly.
+echo "=== Test: error - bad character ==="
+=== Test: error - bad character ===
+echo "hello!" | ./querier "$PAGEDIR" "$INDEXFILE"
+Error: bad character '!' in query.
+Query? 
+Query? 
+echo
 
-# Test error cases - and/or at start
-echo ""
+echo "=== Test: error - 'and' at start ==="
+=== Test: error - 'and' at start ===
+echo "and hello" | ./querier "$PAGEDIR" "$INDEXFILE"
+Error: 'and' cannot be first or last
+Query? 
+Query? 
+echo
 
-echo "=== Test error: and at start ==="
-=== Test error: and at start ===
-echo "and hello" | ./querier /cs50/shared/tse/output/toscrape-1 /cs50/shared/tse/output/toscrape-index-1
-pageDirectory formatted incorrectly.
+echo "=== Test: error - 'or' at end ==="
+=== Test: error - 'or' at end ===
+echo "hello or" | ./querier "$PAGEDIR" "$INDEXFILE"
+Error: 'or' cannot be first or last
+Query? 
+Query? 
+echo
 
-# Test error cases - and/or at end
-echo ""
+echo "=== Test: error - adjacent operators ==="
+=== Test: error - adjacent operators ===
+echo "hello and or world" | ./querier "$PAGEDIR" "$INDEXFILE"
+Error: 'and' and 'or' cannot be adjacent or repeated.
+Query? 
+Query? 
+echo
 
-echo "=== Test error: or at end ==="
-=== Test error: or at end ===
-echo "hello or" | ./querier /cs50/shared/tse/output/toscrape-1 /cs50/shared/tse/output/toscrape-index-1
-pageDirectory formatted incorrectly.
-
-# Test error cases - adjacent operators
-echo ""
-
-echo "=== Test error: adjacent operators ==="
-=== Test error: adjacent operators ===
-echo "hello and or world" | ./querier /cs50/shared/tse/output/toscrape-1 /cs50/shared/tse/output/toscrape-index-1
-pageDirectory formatted incorrectly.
-
-# Test with empty query
-echo ""
-
-echo "=== Test with empty query ==="
-=== Test with empty query ===
-echo "" | ./querier /cs50/shared/tse/output/toscrape-1 /cs50/shared/tse/output/toscrape-index-1
-pageDirectory formatted incorrectly.
-
-echo ""
+echo "=== Test: empty query ==="
+=== Test: empty query ===
+echo "" | ./querier "$PAGEDIR" "$INDEXFILE"
+Query? 
+Query? 
+echo
 
 echo "=== Testing complete ==="
 === Testing complete ===
-

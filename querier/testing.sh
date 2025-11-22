@@ -1,9 +1,9 @@
 #!/bin/bash
 # testing.sh - test script for querier
 
-# paths to shared test data
-PAGEDIR="/cs50/shared/tse/output/toscrape-1"
-INDEXFILE="/cs50/shared/tse/output/toscrape-index-1"
+# paths to local test data
+PAGEDIR="./toscrape-1"
+INDEXFILE="./toscrape-1.index"
 
 echo "=== Test: invalid number of arguments ==="
 ./querier

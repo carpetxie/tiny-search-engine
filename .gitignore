@@ -1,0 +1,6 @@
+# Test data directories
+data/
+querier/toscrape-1/
+querier/toscrape-1.index
+querier/output/
+
